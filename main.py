@@ -31,8 +31,11 @@ right_r = Player("racket.png", 250, 630, 3, (30, 150))
 ####################################################
 ball = GameSprite("tenis_ball.png", 250, 350, 3, (50, 50))
 speed_x, speed_y = 2, 2
+font.init()
+my_font = font.SysFont("Arial", 35)
     ################################################
-    
+win_l = my_font.render("Победила левая рекатка!", True, (255, 255, 0))
+win_r = my_font.render("Победила правая рекатка!", True, (255, 255, 0))
     ################################################
 window = display.set_mode((700, 500))
 display.set_caption('Пинг Понг')
@@ -42,8 +45,6 @@ FPS = 60
 run = True
 finish = False
 
-font.init()
-my_font = font.SysFont("Arial", 35)
 win = my_font.render("Вы победили!", True, (255, 255, 0))
 while run:
     window.fill((117, 153, 161))
@@ -67,5 +68,13 @@ while run:
         right_r.reset()
         left_r.update_l()
         right_r.update_r()
+    ##################################################
+    if ball.rect.x < 0:
+      finish = True
+      window.blit(win_r, (180, 200))
+    if ball.rect.x > 700:
+      finish = True
+      window.blit(win_l, (180, 200))
+    #########################################################3
     display.update() 
     clock.tick(60)
